@@ -1,0 +1,56 @@
+🔹 What is a HashSet?
+
+A collection of unique elements.
+
+No duplicates allowed.
+
+Unordered — no guarantee of insertion order.
+
+Null allowed (only one).
+
+Fast operations: add, remove, contains (~O(1)).
+
+🔹 How HashSet Works
+
+Internally uses a HashMap.
+
+Each element is stored as a key in the HashMap with a dummy value (like PRESENT).
+
+Hashing determines which bucket to store the element.
+
+Example:
+
+HashSet<String> set = new HashSet<>();
+set.add("Apple");  // added
+set.add("Ball");   // added
+set.add("Apple");  // ignored
+
+🔹 Collision Handling
+
+If two elements hash to the same bucket → handled using linked list (separate chaining).
+
+Java 8+ converts long chains (>8) into balanced trees for faster lookup.
+
+🔹 Key Points
+
+Unique elements only.
+
+Unordered collection.
+
+Null element allowed (once).
+
+Fast insert, delete, and search.
+
+Backed by HashMap internally.
+
+🔹 Quick Comparison with HashMap
+Feature	HashMap	HashSet
+Stores	Key-Value pairs	Only keys
+Duplicates	Keys unique, values can duplicate	No duplicates
+Null	1 key can be null	1 element can be null
+Order	Unordered	Unordered
+Backing	Array + LinkedList/Tree	HashMap
+✅ Summary
+
+HashSet = Unique + Unordered + Fast
+Use it when you just need to store unique items and don’t care about order.
