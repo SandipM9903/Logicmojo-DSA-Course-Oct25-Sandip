@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "TrappingRainWater",
+            "request": "launch",
+            "mainClass": "TrappingRainWater",
+            "projectName": "Practise_5d35d2f1"
+        },
+        {
+            "type": "java",
             "name": "ContainerWithMostWater",
             "request": "launch",
             "mainClass": "ContainerWithMostWater",
