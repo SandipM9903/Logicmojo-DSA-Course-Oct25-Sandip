@@ -1,7 +1,7 @@
 //Using two pointers approach
 //Time Complexity: O(n)
 //Space Complexity: O(1)
-
+package Practise.ArrayAndString;
 import java.util.Arrays;
 
 public class TwoSumII {

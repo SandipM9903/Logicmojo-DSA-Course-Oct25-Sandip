@@ -1,5 +1,5 @@
 //Using HashMap
-
+package Practise.ArrayAndString;
 import java.util.HashMap;
 import java.util.Map;
 

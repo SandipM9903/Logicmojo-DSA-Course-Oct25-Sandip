@@ -1,3 +1,4 @@
+package Practise.ArrayAndString;
 public class DuplicateRemovalFromSortedArray {
     public int removeDuplicate(int[] nums){
         if(nums.length == 0) return 0;

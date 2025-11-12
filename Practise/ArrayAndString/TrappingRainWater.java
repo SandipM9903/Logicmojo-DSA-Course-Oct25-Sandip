@@ -1,3 +1,4 @@
+package Practise.ArrayAndString;
 public class TrappingRainWater {
     //Time-Complexity is O(n)
     public int trap(int[] height) {

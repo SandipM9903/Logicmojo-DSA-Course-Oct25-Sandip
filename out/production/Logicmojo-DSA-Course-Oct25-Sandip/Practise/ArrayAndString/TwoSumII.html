@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Sum Algorithm Visualizer - Two Pointers Approach</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            min-height: 100vh;
+            padding: 15px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .description {
+            font-size: 1rem;
+            max-width: 800px;
+            margin: 0 auto 15px;
+            line-height: 1.4;
+        }
+        
+        .algorithm-explanation {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-size: 0.9rem;
+        }
+        
+        .algorithm-explanation h2 {
+            margin-bottom: 10px;
+            color: #ffcc00;
+            font-size: 1.2rem;
+        }
+        
+        .algorithm-explanation ul {
+            margin-left: 15px;
+            line-height: 1.4;
+        }
+        
+        .algorithm-explanation li {
+            margin-bottom: 6px;
+        }
+        
+        .input-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        input {
+            padding: 10px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            flex: 1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background: #ffcc00;
+            color: #1a2a6c;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:hover {
+            background: #ffd633;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .step-counter {
+            text-align: center;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: #ffcc00;
+        }
+        
+        .main-content {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .visualization-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .code-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .panel-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #ffcc00;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .toggle-code {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
+        .array-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .array-element {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .array-element.active {
+            background: #ffcc00;
+            color: #1a2a6c;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.7);
+        }
+        
+        .array-element.found {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .array-element.need {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .index-label {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .pointer {
+            position: absolute;
+            bottom: -20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        
+        .pointers-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding: 0 20px;
+        }
+        
+        .pointer-label {
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        
+        .code-container {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            overflow-x: auto;
+            flex: 1;
+            font-size: 0.9rem;
+        }
+        
+        .code-line {
+            padding: 6px 8px;
+            margin: 4px 0;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+            font-family: 'Courier New', monospace;
+            white-space: pre;
+        }
+        
+        .code-line.active {
+            background: rgba(255, 204, 0, 0.2);
+            border-left: 3px solid #ffcc00;
+        }
+        
+        .variables {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .variable {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            min-width: 100px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .variable-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-top: 5px;
+        }
+        
+        .output {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-size: 0.9rem;
+        }
+        
+        .output h2 {
+            margin-bottom: 10px;
+            color: #ffcc00;
+            font-size: 1.2rem;
+        }
+        
+        /* Complexity Visualization Styles */
+        .complexity-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .complexity-section h2 {
+            margin-bottom: 15px;
+            color: #ffcc00;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        
+        .complexity-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .complexity-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            padding: 15px;
+            flex: 1;
+            min-width: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .complexity-card h3 {
+            margin-bottom: 10px;
+            color: #ffcc00;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .complexity-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+            color: #4CAF50;
+        }
+        
+        .complexity-explanation {
+            line-height: 1.4;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .complexity-visual {
+            height: 120px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        .complexity-bar {
+            width: 25px;
+            background: #ffcc00;
+            border-radius: 4px 4px 0 0;
+            transition: height 0.5s ease;
+            position: relative;
+        }
+        
+        .complexity-bar-label {
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.7rem;
+        }
+        
+        .complexity-legend {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+        
+        .big-o-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .big-o-table th, .big-o-table td {
+            padding: 8px 10px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .big-o-table th {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffcc00;
+        }
+        
+        .big-o-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        @media (max-width: 1024px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .visualization-panel, .code-panel {
+                width: 100%;
+            }
+            
+            .complexity-container {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .array-element {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.7rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 100%;
+                max-width: 250px;
+            }
+            
+            .variables {
+                gap: 10px;
+            }
+            
+            .variable {
+                min-width: 80px;
+                padding: 8px;
+            }
+            
+            .variable-value {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Two Sum Algorithm Visualizer - Two Pointers Approach</h1>
+            <p class="description">
+                This visualization demonstrates how the Two Sum algorithm works using the two pointers approach on a sorted array.
+            </p>
+        </header>
+        
+        <div class="algorithm-explanation">
+            <h2>How the Algorithm Works</h2>
+            <ul>
+                <li>The algorithm uses two pointers: one at the start (i) and one at the end (j) of the sorted array</li>
+                <li>It calculates the sum of the elements at the two pointers</li>
+                <li>If the sum equals the target, the solution is found</li>
+                <li>If the sum is less than the target, the left pointer moves right (i++)</li>
+                <li>If the sum is greater than the target, the right pointer moves left (j--)</li>
+                <li>This approach has O(n) time complexity and O(1) space complexity</li>
+            </ul>
+        </div>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <input type="text" id="arrayInput" placeholder="Enter comma-separated numbers (e.g., 2,7,11,15)" value="2,7,11,15">
+            </div>
+            <div class="input-group">
+                <input type="number" id="targetInput" placeholder="Enter target value" value="9">
+                <button id="updateArray">Update</button>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="prevStep">Previous Step</button>
+            <button id="nextStep">Next Step</button>
+            <button id="reset">Reset</button>
+            <button id="runAll">Run All Steps</button>
+        </div>
+        
+        <div class="step-counter">
+            Step: <span id="stepNumber">0</span> / <span id="totalSteps">0</span>
+        </div>
+        
+        <div class="main-content">
+            <div class="visualization-panel">
+                <h2 class="panel-title">Array Visualization</h2>
+                <div class="array-container" id="arrayVisualization">
+                    <!-- Array elements will be generated here -->
+                </div>
+                
+                <div class="pointers-container">
+                    <div class="pointer-label">Left Pointer (i)</div>
+                    <div class="pointer-label">Right Pointer (j)</div>
+                </div>
+                
+                <div class="variables">
+                    <div class="variable">
+                        <div>Left Pointer (i)</div>
+                        <div class="variable-value" id="iValue">0</div>
+                    </div>
+                    <div class="variable">
+                        <div>Right Pointer (j)</div>
+                        <div class="variable-value" id="jValue">3</div>
+                    </div>
+                    <div class="variable">
+                        <div>Current Sum</div>
+                        <div class="variable-value" id="sumValue">17</div>
+                    </div>
+                </div>
+                
+                <div class="output">
+                    <h2>Algorithm Output</h2>
+                    <div id="outputText">The algorithm hasn't run yet. Click "Next Step" to start.</div>
+                </div>
+            </div>
+            
+            <div class="code-panel">
+                <h2 class="panel-title">
+                    Algorithm Code
+                    <button class="toggle-code" id="toggleCode">Collapse</button>
+                </h2>
+                <div class="code-container" id="codeContainer">
+                    <div class="code-line" id="line1">public int[] twoSum(int[] numbers, int target) {</div>
+                    <div class="code-line" id="line2">    int i = 0;</div>
+                    <div class="code-line" id="line3">    int j = numbers.length - 1;</div>
+                    <div class="code-line" id="line4">    </div>
+                    <div class="code-line" id="line5">    while (i < j) {</div>
+                    <div class="code-line" id="line6">        int sum = numbers[i] + numbers[j];</div>
+                    <div class="code-line" id="line7">        </div>
+                    <div class="code-line" id="line8">        if (sum == target) {</div>
+                    <div class="code-line" id="line9">            return new int[]{i + 1, j + 1};</div>
+                    <div class="code-line" id="line10">        } else if (sum < target) {</div>
+                    <div class="code-line" id="line11">            i++;</div>
+                    <div class="code-line" id="line12">        } else {</div>
+                    <div class="code-line" id="line13">            j--;</div>
+                    <div class="code-line" id="line14">        }</div>
+                    <div class="code-line" id="line15">    }</div>
+                    <div class="code-line" id="line16">    </div>
+                    <div class="code-line" id="line17">    return null;</div>
+                    <div class="code-line" id="line18">}</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Complexity Visualization Section -->
+        <div class="complexity-section">
+            <h2>Time & Space Complexity Analysis</h2>
+            
+            <div class="complexity-container">
+                <div class="complexity-card">
+                    <h3>Time Complexity</h3>
+                    <div class="complexity-value">O(n)</div>
+                    <div class="complexity-explanation">
+                        <p>The algorithm iterates through the array at most once, with each step moving one of the pointers.</p>
+                        <p>In the worst case, it will check n-1 elements before finding the solution.</p>
+                    </div>
+                    <div class="complexity-visual" id="timeComplexityVisual">
+                        <!-- Time complexity visualization bars will be generated here -->
+                    </div>
+                    <div class="complexity-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #ffcc00;"></div>
+                            <span>Our Algorithm: O(n)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #4CAF50;"></div>
+                            <span>Optimal Solution</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="complexity-card">
+                    <h3>Space Complexity</h3>
+                    <div class="complexity-value">O(1)</div>
+                    <div class="complexity-explanation">
+                        <p>The algorithm only uses a constant amount of extra space for the two pointers and the sum variable.</p>
+                        <p>This is more space-efficient than the HashMap approach.</p>
+                    </div>
+                    <div class="complexity-visual" id="spaceComplexityVisual">
+                        <!-- Space complexity visualization bars will be generated here -->
+                    </div>
+                    <div class="complexity-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #ffcc00;"></div>
+                            <span>Our Algorithm: O(1)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #4CAF50;"></div>
+                            <span>Optimal Solution</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="complexity-card" style="margin-top: 15px;">
+                <h3>Comparison with Other Approaches</h3>
+                <table class="big-o-table">
+                    <thead>
+                        <tr>
+                            <th>Approach</th>
+                            <th>Time Complexity</th>
+                            <th>Space Complexity</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Two Pointers (Current)</td>
+                            <td>O(n)</td>
+                            <td>O(1)</td>
+                            <td>Optimal time and space, requires sorted array</td>
+                        </tr>
+                        <tr>
+                            <td>HashMap</td>
+                            <td>O(n)</td>
+                            <td>O(n)</td>
+                            <td>Optimal time, uses extra space</td>
+                        </tr>
+                        <tr>
+                            <td>Brute Force</td>
+                            <td>O(n²)</td>
+                            <td>O(1)</td>
+                            <td>Checks all possible pairs</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Algorithm state
+        let nums = [2, 7, 11, 15];
+        let target = 9;
+        let i = 0;
+        let j = nums.length - 1;
+        let step = 0;
+        let isCompleted = false;
+        let steps = [];
+        let codeCollapsed = false;
+        let result = null;
+        
+        // DOM elements
+        const arrayVisualization = document.getElementById('arrayVisualization');
+        const iValue = document.getElementById('iValue');
+        const jValue = document.getElementById('jValue');
+        const sumValue = document.getElementById('sumValue');
+        const stepNumber = document.getElementById('stepNumber');
+        const totalSteps = document.getElementById('totalSteps');
+        const outputText = document.getElementById('outputText');
+        const arrayInput = document.getElementById('arrayInput');
+        const targetInput = document.getElementById('targetInput');
+        const timeComplexityVisual = document.getElementById('timeComplexityVisual');
+        const spaceComplexityVisual = document.getElementById('spaceComplexityVisual');
+        const codeContainer = document.getElementById('codeContainer');
+        const toggleCodeBtn = document.getElementById('toggleCode');
+        
+        // Buttons
+        const prevStepBtn = document.getElementById('prevStep');
+        const nextStepBtn = document.getElementById('nextStep');
+        const resetBtn = document.getElementById('reset');
+        const runAllBtn = document.getElementById('runAll');
+        const updateArrayBtn = document.getElementById('updateArray');
+        
+        // Initialize visualization
+        function init() {
+            generateSteps();
+            renderArray();
+            updateVariables();
+            updateCodeHighlight();
+            updateButtons();
+            updateComplexityVisualization();
+        }
+        
+        // Generate all algorithm steps
+        function generateSteps() {
+            steps = [];
+            let tempI = 0;
+            let tempJ = nums.length - 1;
+            let tempResult = null;
+            
+            // Initial state
+            steps.push({
+                nums: [...nums],
+                i: tempI,
+                j: tempJ,
+                sum: nums[tempI] + nums[tempJ],
+                description: `Initial state. Left pointer (i) at index ${tempI}, right pointer (j) at index ${tempJ}. Sum = ${nums[tempI]} + ${nums[tempJ]} = ${nums[tempI] + nums[tempJ]}.`,
+                activeLine: 2
+            });
+            
+            // Algorithm steps
+            while (tempI < tempJ && !tempResult) {
+                const sum = nums[tempI] + nums[tempJ];
+                
+                steps.push({
+                    nums: [...nums],
+                    i: tempI,
+                    j: tempJ,
+                    sum: sum,
+                    description: `Calculating sum: nums[${tempI}] + nums[${tempJ}] = ${nums[tempI]} + ${nums[tempJ]} = ${sum}.`,
+                    activeLine: 6
+                });
+                
+                if (sum === target) {
+                    steps.push({
+                        nums: [...nums],
+                        i: tempI,
+                        j: tempJ,
+                        sum: sum,
+                        description: `Sum equals target! Solution found: [${tempI+1}, ${tempJ+1}].`,
+                        activeLine: 8
+                    });
+                    
+                    tempResult = [tempI+1, tempJ+1];
+                    steps.push({
+                        nums: [...nums],
+                        i: tempI,
+                        j: tempJ,
+                        sum: sum,
+                        result: [...tempResult],
+                        description: `Returning indices [${tempResult[0]}, ${tempResult[1]}] as the solution.`,
+                        activeLine: 9
+                    });
+                    break;
+                } else if (sum < target) {
+                    steps.push({
+                        nums: [...nums],
+                        i: tempI,
+                        j: tempJ,
+                        sum: sum,
+                        description: `Sum ${sum} is less than target ${target}. Moving left pointer (i) to the right.`,
+                        activeLine: 11
+                    });
+                    
+                    tempI++;
+                    steps.push({
+                        nums: [...nums],
+                        i: tempI,
+                        j: tempJ,
+                        sum: nums[tempI] + nums[tempJ],
+                        description: `Moved left pointer to index ${tempI}. New sum = ${nums[tempI]} + ${nums[tempJ]} = ${nums[tempI] + nums[tempJ]}.`,
+                        activeLine: 11
+                    });
+                } else {
+                    steps.push({
+                        nums: [...nums],
+                        i: tempI,
+                        j: tempJ,
+                        sum: sum,
+                        description: `Sum ${sum} is greater than target ${target}. Moving right pointer (j) to the left.`,
+                        activeLine: 13
+                    });
+                    
+                    tempJ--;
+                    steps.push({
+                        nums: [...nums],
+                        i: tempI,
+                        j: tempJ,
+                        sum: nums[tempI] + nums[tempJ],
+                        description: `Moved right pointer to index ${tempJ}. New sum = ${nums[tempI]} + ${nums[tempJ]} = ${nums[tempI] + nums[tempJ]}.`,
+                        activeLine: 13
+                    });
+                }
+            }
+            
+            // If no solution found
+            if (!tempResult) {
+                steps.push({
+                    nums: [...nums],
+                    i: tempI,
+                    j: tempJ,
+                    sum: null,
+                    description: "No solution found. Returning null.",
+                    activeLine: 17
+                });
+            }
+            
+            totalSteps.textContent = steps.length - 1;
+        }
+        
+        // Render the array visualization
+        function renderArray() {
+            arrayVisualization.innerHTML = '';
+            const currentStep = steps[step];
+            
+            currentStep.nums.forEach((num, index) => {
+                const element = document.createElement('div');
+                element.className = 'array-element';
+                element.textContent = num;
+                
+                // Add index label
+                const indexLabel = document.createElement('div');
+                indexLabel.className = 'index-label';
+                indexLabel.textContent = index;
+                element.appendChild(indexLabel);
+                
+                // Highlight active elements
+                if (index === currentStep.i) {
+                    element.classList.add('active');
+                    const pointer = document.createElement('div');
+                    pointer.className = 'pointer';
+                    pointer.textContent = 'i';
+                    element.appendChild(pointer);
+                }
+                
+                if (index === currentStep.j) {
+                    element.classList.add('active');
+                    const pointer = document.createElement('div');
+                    pointer.className = 'pointer';
+                    pointer.textContent = 'j';
+                    element.appendChild(pointer);
+                }
+                
+                // Highlight found elements if solution found
+                if (currentStep.result && (index === currentStep.i || index === currentStep.j)) {
+                    element.classList.add('found');
+                }
+                
+                arrayVisualization.appendChild(element);
+            });
+        }
+        
+        // Update variable displays
+        function updateVariables() {
+            const currentStep = steps[step];
+            iValue.textContent = currentStep.i;
+            jValue.textContent = currentStep.j;
+            sumValue.textContent = currentStep.sum || 'N/A';
+            stepNumber.textContent = step;
+            outputText.textContent = currentStep.description;
+        }
+        
+        // Update code highlighting
+        function updateCodeHighlight() {
+            // Remove active class from all lines
+            for (let i = 1; i <= 18; i++) {
+                document.getElementById(`line${i}`).classList.remove('active');
+            }
+            
+            // Add active class to current line
+            const currentStep = steps[step];
+            if (currentStep && currentStep.activeLine) {
+                document.getElementById(`line${currentStep.activeLine}`).classList.add('active');
+            }
+        }
+        
+        // Update button states
+        function updateButtons() {
+            prevStepBtn.disabled = step === 0;
+            nextStepBtn.disabled = step === steps.length - 1;
+        }
+        
+        // Update complexity visualization
+        function updateComplexityVisualization() {
+            // Time complexity visualization
+            timeComplexityVisual.innerHTML = '';
+            const timeComplexities = [
+                { label: 'O(1)', value: 20 },
+                { label: 'O(log n)', value: 40 },
+                { label: 'O(n)', value: 100 },
+                { label: 'O(n²)', value: 40 }
+            ];
+            
+            timeComplexities.forEach(comp => {
+                const bar = document.createElement('div');
+                bar.className = 'complexity-bar';
+                bar.style.height = `${comp.value}%`;
+                bar.style.backgroundColor = comp.label === 'O(n)' ? '#ffcc00' : 
+                                          comp.label === 'O(n²)' ? '#f44336' : 'rgba(255, 255, 255, 0.3)';
+                
+                const label = document.createElement('div');
+                label.className = 'complexity-bar-label';
+                label.textContent = comp.label;
+                
+                bar.appendChild(label);
+                timeComplexityVisual.appendChild(bar);
+            });
+            
+            // Space complexity visualization
+            spaceComplexityVisual.innerHTML = '';
+            const spaceComplexities = [
+                { label: 'O(1)', value: 100 },
+                { label: 'O(log n)', value: 60 },
+                { label: 'O(n)', value: 40 },
+                { label: 'O(n²)', value: 20 }
+            ];
+            
+            spaceComplexities.forEach(comp => {
+                const bar = document.createElement('div');
+                bar.className = 'complexity-bar';
+                bar.style.height = `${comp.value}%`;
+                bar.style.backgroundColor = comp.label === 'O(1)' ? '#ffcc00' : 
+                                           comp.label === 'O(n)' ? '#4CAF50' : 'rgba(255, 255, 255, 0.3)';
+                
+                const label = document.createElement('div');
+                label.className = 'complexity-bar-label';
+                label.textContent = comp.label;
+                
+                bar.appendChild(label);
+                spaceComplexityVisual.appendChild(bar);
+            });
+        }
+        
+        // Toggle code panel visibility
+        function toggleCodePanel() {
+            codeCollapsed = !codeCollapsed;
+            if (codeCollapsed) {
+                codeContainer.style.display = 'none';
+                toggleCodeBtn.textContent = 'Expand';
+            } else {
+                codeContainer.style.display = 'block';
+                toggleCodeBtn.textContent = 'Collapse';
+            }
+        }
+        
+        // Event listeners
+        prevStepBtn.addEventListener('click', () => {
+            if (step > 0) {
+                step--;
+                renderArray();
+                updateVariables();
+                updateCodeHighlight();
+                updateButtons();
+            }
+        });
+        
+        nextStepBtn.addEventListener('click', () => {
+            if (step < steps.length - 1) {
+                step++;
+                renderArray();
+                updateVariables();
+                updateCodeHighlight();
+                updateButtons();
+            }
+        });
+        
+        resetBtn.addEventListener('click', () => {
+            step = 0;
+            renderArray();
+            updateVariables();
+            updateCodeHighlight();
+            updateButtons();
+        });
+        
+        runAllBtn.addEventListener('click', () => {
+            if (step < steps.length - 1) {
+                step = steps.length - 1;
+                renderArray();
+                updateVariables();
+                updateCodeHighlight();
+                updateButtons();
+            }
+        });
+        
+        updateArrayBtn.addEventListener('click', () => {
+            const input = arrayInput.value;
+            const targetValue = parseInt(targetInput.value);
+            
+            try {
+                // Parse the input as an array of numbers
+                const newArray = input.split(',').map(num => parseInt(num.trim()));
+                
+                // Validate the input
+                if (newArray.some(isNaN)) {
+                    throw new Error('Invalid array input. Please enter comma-separated numbers.');
+                }
+                
+                if (isNaN(targetValue)) {
+                    throw new Error('Invalid target value. Please enter a valid number.');
+                }
+                
+                // Sort the array for two pointers approach
+                newArray.sort((a, b) => a - b);
+                
+                // Update the array and target, then reset
+                nums = newArray;
+                target = targetValue;
+                step = 0;
+                generateSteps();
+                renderArray();
+                updateVariables();
+                updateCodeHighlight();
+                updateButtons();
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+        
+        toggleCodeBtn.addEventListener('click', toggleCodePanel);
+        
+        // Initialize the visualization
+        init();
+    </script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+package Practise.ArrayAndString;
 public class ContainerWithMostWater {
     public int maxArea(int[] height) {
         int maxWater = 0;

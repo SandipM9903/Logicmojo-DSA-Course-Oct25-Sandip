@@ -1,0 +1,65 @@
+🔹 What is a HashMap?
+
+Stores key–value pairs.
+
+Uses hashing to find where to store each key.
+
+Very fast for insert, search, and delete (average O(1) time).
+
+🔹 How Hashing Works
+
+Every key generates a hash code using hashCode().
+
+Hash code → converted to bucket index using % arraySize.
+
+That index points to where the key–value pair is stored.
+
+Example:
+"name".hashCode() % 10 = 5 → stored in bucket 5
+
+🔹 Collision
+
+When two keys map to the same index.
+
+Handled in two main ways:
+
+Separate Chaining (used in Java)
+
+Linear Probing (open addressing)
+
+🔹 Separate Chaining
+
+Each bucket has its own linked list (or tree).
+
+If multiple keys land in the same bucket, they form a chain.
+
+Example:
+
+Index 2 → ("Apple",10) → ("Ball",20)
+
+
+Linked list grows automatically as more keys hash to the same bucket.
+
+In Java 8+, if a bucket has >8 items → converts to a balanced tree for speed.
+
+🔹 Linear Probing (concept)
+
+If a bucket is full, look for the next empty slot in the array.
+
+Example: if index 3 is full, try 4, 5, etc.
+
+🔹 Load Factor and Resizing
+
+Load factor (default 0.75) → when 75% full, HashMap doubles its size.
+
+After resizing, all keys are rehashed to new positions.
+
+✅ Summary Table
+Concept	Meaning
+Hashing	Converts key → index
+Collision	Two keys same index
+Separate Chaining	Linked list per bucket
+Linear Probing	Find next empty slot
+Linked List	Grows automatically
+Tree Conversion	When bucket > 8 entries
+Load Factor	When to resize (default 0.75)
