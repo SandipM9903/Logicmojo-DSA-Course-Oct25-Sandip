@@ -6,7 +6,5 @@ import java.util.List;
 // Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
 
 public class GroupAnagram {
-    public List<List<String>> groupAnagrams(String[] strs) {
-        
-    }
+
 }
