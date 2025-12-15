@@ -2,6 +2,103 @@ package Practise.Recursion;
 
 import java.util.*;
 
+/*
+    N-Queens Problem Notes (Recursion + Backtracking)
+Goal
+
+Place N queens on an N x N chessboard such that no two queens attack each other.
+
+Step 1: Recursive Queen Placement Function
+		void queenPlace(char[][] board, int row, int n, List<List<String>> ans)
+
+		Parameters
+
+		board → current chessboard state
+
+		row → current row where we try to place a queen
+
+		n → size of the board
+
+		ans → stores all valid solutions
+
+		Logic
+
+		Base condition
+		If row == n, all queens are placed safely
+		→ convert board to List<String>
+		→ add to ans
+		→ return
+
+		For the current row, try placing a queen in every column
+
+		Before placing, call isSafe
+
+		If safe:
+
+		place 'Q'
+
+		recurse to row + 1
+
+		backtrack by resetting '.'
+
+		Concept Used
+
+		Recursion
+
+		Backtracking
+
+Step 2: Convert Board to Output Format
+		private List<String> constructBoard(char[][] board)
+
+		Purpose
+
+		Convert char[][] board into List<String>
+
+		Required because final answer format is List<List<String>>
+
+		Logic
+
+		Each row (char[]) is converted into a String
+
+		Add each string to a list and return
+
+Step 3: Safety Check Function
+		boolean isSafe(char[][] board, int row, int col, int n)
+
+		Checks Performed
+
+		Vertical (same column, upward)
+
+		Left diagonal (↖)
+
+		Right diagonal (↗)
+
+		Important Note
+
+		Horizontal check is NOT required
+
+		Reason: Only one queen is placed per row
+
+		Returns
+
+		true → position is safe
+
+		false → position is not safe
+
+Step 4: Main Function
+		public List<List<String>> solveNQueens(int n)
+
+		Logic
+
+		Create an empty result list ans
+
+		Initialize n x n board with '.'
+
+		Start recursion from row 0
+
+		Return ans
+*/
+
 public class NQueens {
      public void queenPlace(char[][] board, int row, int n, List<List<String>> ans){
         if(row == n){
