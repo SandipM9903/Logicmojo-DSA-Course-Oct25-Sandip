@@ -36,7 +36,7 @@ public class TreeFormation {
         }
     }
 
-    //Preorder traversal
+    //Preorder traversal 1.Root 2.All Left Subtree 3.All Right Subtree
     public static void preorder(Node root){
         //Base case
         if(root == null){
@@ -48,6 +48,16 @@ public class TreeFormation {
         System.out.print(root.data + " ");
         preorder(root.left);
         preorder(root.right);
+    }
+
+    //Inorder Traversal 1. Print all left subtree 2. Print Root 3. Print all right subtree
+    public static void inorder(Node root){
+        if(root == null){
+            return;
+        }
+        inorder(root.left);
+        System.out.print(root.data);
+        inorder(root.right);
     }
 
     public static void main(String[] args) {
