@@ -31,7 +31,7 @@ public class LevelOrderTraversal {
         }
     }
 
-    //Now Implementing Level Order Traversal
+    //Now Implementing Level Order Traversal    ::::   TIME COMPLEXITY : O(n)
     public static void lot(Node root){
         if(root == null){
             return;

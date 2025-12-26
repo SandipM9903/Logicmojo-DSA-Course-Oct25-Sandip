@@ -29,7 +29,7 @@ public class CountOfNodes {
         }
     }
 
-    //Counting All The Node ::::  Sum of all left-sub-tree + Sum of all right-sub-tree + 1
+    //Counting All The Node ::::  Sum of all left-sub-tree + Sum of all right-sub-tree + 1   TIME-COMPLEXITY : O(n)
     public static int count(Node root){
         if(root == null){
             return 0;
@@ -40,11 +40,25 @@ public class CountOfNodes {
         return leftSubTree + rightSubTree + 1;
     }
 
+    //Sum of all Nodes Data
+    public static int sum(Node root){
+        if(root == null){
+            return 0;
+        }
+
+        int leftSum = sum(root.left);
+        int rightSum = sum(root.right);
+
+        return leftSum + rightSum + root.data;
+    }
+
     public static void main(String[] args) {
         int nodes[] = {1, 2, 4, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
         Node root = BinaryTree.buildTree(nodes);
         System.out.println(root.data);
         System.out.println("==== Count ====");
         System.out.println(count(root));
+        System.out.println("==== Sum ====");
+        System.out.println(sum(root));
     }
 }
