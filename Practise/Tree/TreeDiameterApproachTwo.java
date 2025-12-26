@@ -29,6 +29,13 @@ public class TreeDiameterApproachTwo {
         }
     }
 
+    // Diameter calculation steps (Optimized – O(n)):
+    // 1) Recursively get left subtree height & diameter
+    // 2) Recursively get right subtree height & diameter
+    // 3) Calculate current height = max(left, right) + 1
+    // 4) Calculate diameter as max(left.diameter, right.diameter, left.height + right.height + 1)
+    // 5) Return both height and diameter together
+
     static class TreeInfo{
         int height;
         int diameter;
